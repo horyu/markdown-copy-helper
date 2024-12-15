@@ -12,7 +12,6 @@ export default defineBackground(() => {
       chrome.tabs
         .sendMessage(tab.id, {
           type: "renderAndCopy",
-          text: info.selectionText,
         })
         .catch((error) => console.error("Failed to send message:", error));
     }
