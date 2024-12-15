@@ -1,6 +1,6 @@
 {
-  "name": "wxt-starter",
-  "description": "manifest.json description",
+  "name": "markdown-copy-helper",
+  "description": "Convert Markdown text to HTML and copy",
   "private": true,
   "version": "0.0.0",
   "type": "module",
