@@ -1,6 +1,30 @@
 export default defineContentScript({
-  matches: ['*://*.google.com/*'],
+  matches: ["<all_urls>"],
   main() {
-    console.log('Hello content.');
+    chrome.runtime.onMessage.addListener(
+      (request: { type: string; text: string }, sender, sendResponse) => {
+        if (request.type === "renderAndCopy") {
+          renderAndCopy(request.text.repeat(2)).catch((error) => {
+            console.error("Failed to write text to clipboard:", error);
+          });
+        }
+      }
+    );
   },
 });
+
+function renderAndCopy(text: string): Promise<void> {
+  const typePlain = "text/plain";
+  const typeHtml = "text/html";
+  const items = {
+    [typePlain]: new Blob([text], { type: typePlain }),
+    [typeHtml]: new Blob([renderMarkdown(text)], { type: typeHtml }),
+  };
+  const data = [new ClipboardItem(items)];
+
+  return navigator.clipboard.write(data);
+}
+
+function renderMarkdown(text: string): string {
+  return `<strong>${text}</strong>`;
+}
