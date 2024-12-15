@@ -1,10 +1,12 @@
+import markdownit from 'markdown-it'
+
 export default defineContentScript({
   matches: ["<all_urls>"],
   main() {
     chrome.runtime.onMessage.addListener(
       (request: { type: string; text: string }, sender, sendResponse) => {
         if (request.type === "renderAndCopy") {
-          renderAndCopy(request.text.repeat(2)).catch((error) => {
+          renderAndCopy(request.text).catch((error) => {
             console.error("Failed to write text to clipboard:", error);
           });
         }
@@ -26,5 +28,5 @@ function renderAndCopy(text: string): Promise<void> {
 }
 
 function renderMarkdown(text: string): string {
-  return `<strong>${text}</strong>`;
+  return markdownit().render(text);
 }
