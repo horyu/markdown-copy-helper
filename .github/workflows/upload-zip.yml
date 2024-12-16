@@ -27,4 +27,4 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: markdown-copy-helper
-          path: .output/markdown-copy-helper-*
+          path: .output/*.zip
