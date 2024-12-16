@@ -27,4 +27,5 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: markdown-copy-helper
+          include-hidden-files: true
           path: .output/*.zip
