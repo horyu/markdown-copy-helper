@@ -21,9 +21,10 @@ export default defineContentScript({
 function renderAndCopy(text: string): Promise<void> {
   const typePlain = "text/plain";
   const typeHtml = "text/html";
+  const blobParts = [renderMarkdown(text)];
   const items = {
-    [typePlain]: new Blob([text], { type: typePlain }),
-    [typeHtml]: new Blob([renderMarkdown(text)], { type: typeHtml }),
+    [typePlain]: new Blob(blobParts, { type: typePlain }),
+    [typeHtml]: new Blob(blobParts, { type: typeHtml }),
   };
   const data = [new ClipboardItem(items)];
 
